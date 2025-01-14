@@ -37,48 +37,43 @@ function calculEpargne(investissementAnnuel, taux, n) {
     currentValue = (currentValue + investissementAnnuel) * (tauxDecimal + 1);
     suite.push(currentValue.toFixed(2));
   }
-  console.log(suite)
+
   return suite;
 }
-function calculTotalInvesti(investissementAnnuel, n) {
 
+function calculBenefAnnuel() {
   const suite = [];
-  for (let i = 1; i <= n; i++) {
-    let investissement = i* investissementAnnuel
-    suite.push(investissement.toFixed(2));
+ const epargne = calculEpargne(props.annualInvestment, props.rate, props.investmentDuration);
+  let currentValue = epargne[0] - props.annualInvestment;
+  suite.push(currentValue);
+  for (let i = 1; i <= props.investmentDuration-1; i++) {
+    currentValue = epargne[i] - props.annualInvestment - epargne[i-1]
+    suite.push(currentValue.toFixed(2));
   }
-  return suite;
+  return suite
 }
-
 function renderChart() {
   const labels = Array.from(
       { length: props.investmentDuration },
       (_, i) => `${i + 1} année${i + 1 > 1 ? "s" : ""}`
   );
 
-  const totalInvested = calculTotalInvesti(props.annualInvestment, props.investmentDuration);
 
-  const savings = calculEpargne(props.annualInvestment, props.rate, props.investmentDuration)
+  const savings = calculBenefAnnuel();
+
 
   new Chart(chartCanvas.value, {
-    type: "line",
+    type: "bar",
     data: {
       labels: labels,
       datasets: [
         {
-          label: "Épargne (en bleu)",
+          label: "Bénéfice annuel (en bleu)",
           data: savings,
           borderColor: "blue",
           backgroundColor: "rgba(0, 0, 255, 0.1)",
           borderWidth: 2,
-        },
-        {
-          label: "Total investi (en rouge)",
-          data: totalInvested,
-          borderColor: "red",
-          backgroundColor: "rgba(255, 0, 0, 0.1)",
-          borderWidth: 2,
-        },
+        }
       ],
     },
     options: {

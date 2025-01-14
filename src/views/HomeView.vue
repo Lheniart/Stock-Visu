@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
 import BenefTotal from "@/components/Graphs/BenefTotal.vue";
+import BenefAnnuel from "@/components/Graphs/BenefAnnuel.vue";
 
-const annualInvestment = ref<number>(1200);
-const investmentDuration = ref<number>(32);
-const interestRate = ref<number>(2);
+const annualInvestment = ref<number>(0);
+const investmentDuration = ref<number>(0);
+const interestRate = ref<number>(0);
 
 const componentKey = computed(() => `${annualInvestment.value}-${investmentDuration.value}-${interestRate.value}`);
 
@@ -49,7 +50,7 @@ const componentKey = computed(() => `${annualInvestment.value}-${investmentDurat
             :rate="interestRate"/>
       </div>
       <div id="graphEpargne">
-        <BenefTotal
+        <benef-annuel
             v-if="interestRate!=0 && investmentDuration != 0 && annualInvestment!= 0"
             :key="componentKey"
             :annualInvestment="annualInvestment"
