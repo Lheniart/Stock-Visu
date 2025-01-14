@@ -50,7 +50,10 @@ function calculTotalInvesti(investissementAnnuel, n) {
 }
 
 function renderChart() {
-  const labels = Array.from({ length: props.investmentDuration }, (_, i) => i + 1);
+  const labels = Array.from(
+      { length: props.investmentDuration },
+      (_, i) => `${i + 1} année${i + 1 > 1 ? "s" : ""}`
+  );
 
   const totalInvested = calculTotalInvesti(props.annualInvestment, props.investmentDuration);
 
