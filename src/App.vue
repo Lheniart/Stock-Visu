@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import BenefTotal from "@/components/Graphs/BenefTotal.vue";
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import { RouterView } from 'vue-router'
     <router-link to="/history">Historique</router-link>
   </nav>
   <RouterView />
+  <BenefTotal :annualInvestment="1200" :investmentDuration="32"  :rate="2"></BenefTotal>
 </template>
 
 <style>
