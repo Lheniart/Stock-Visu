@@ -4,101 +4,107 @@
   </div>
 </template>
 
-<script>
-import { Chart } from "chart.js/auto";
+<script setup>
+import { ref, onMounted } from 'vue';
+import { Chart } from 'chart.js/auto';
 
-export default {
-  name: "InvestmentChart",
-  props: {
-    annualInvestment: {
-      type: Number,
-      required: true,
-    },
-    investmentDuration: {
-      type: Number,
-      required: true,
-    },
-    rate: {
-      type: Number,
-      required: true,
-    },
+const props = defineProps({
+  annualInvestment: {
+    type: Number,
+    required: true,
   },
-  mounted() {
-    this.renderChart();
+  investmentDuration: {
+    type: Number,
+    required: true,
   },
-  methods: {
-    renderChart() {
-      const labels = Array.from(
-          { length: this.investmentDuration },
-          (_, i) => i + 1
-      );
+  rate: {
+    type: Number,
+    required: true,
+  },
+});
 
-      const totalInvested = labels.map(
-          (year) => year * this.annualInvestment
-      );
+const chartCanvas = ref(null);
 
-      const savings = labels.map((year) =>
-          this.calculateCompoundInterest(
-              this.annualInvestment,
-              this.rate / 100,
-              year
-          )
-      );
+function calculEpargne(investissementAnnuel, taux, n) {
+  n = n - 1
+  const tauxDecimal = taux / 100;
+  const suite = [];
 
-      new Chart(this.$refs.chartCanvas, {
-        type: "line",
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: "Épargne (en bleu)",
-              data: savings,
-              borderColor: "blue",
-              backgroundColor: "rgba(0, 0, 255, 0.1)",
-              borderWidth: 2,
-            },
-            {
-              label: "Total investi (en rouge)",
-              data: totalInvested,
-              borderColor: "red",
-              backgroundColor: "rgba(255, 0, 0, 0.1)",
-              borderWidth: 2,
-            },
-          ],
+  let currentValue = investissementAnnuel * (tauxDecimal + 1);
+  suite.push(currentValue);
+
+  for (let i = 1; i <= n; i++) {
+    currentValue = (currentValue + investissementAnnuel) * (tauxDecimal + 1);
+    suite.push(currentValue.toFixed(2));
+  }
+  return suite;
+}
+function calculTotalInvesti(investissementAnnuel, n) {
+
+  const suite = [];
+  for (let i = 1; i <= n; i++) {
+    let investissement = i* investissementAnnuel
+    suite.push(investissement.toFixed(2));
+  }
+  return suite;
+}
+
+function renderChart() {
+  const labels = Array.from({ length: props.investmentDuration }, (_, i) => i + 1);
+
+  const totalInvested = calculTotalInvesti(props.annualInvestment, props.investmentDuration);
+
+  const savings = calculEpargne(props.annualInvestment, props.rate, props.investmentDuration)
+
+  new Chart(chartCanvas.value, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Épargne (en bleu)",
+          data: savings,
+          borderColor: "blue",
+          backgroundColor: "rgba(0, 0, 255, 0.1)",
+          borderWidth: 2,
         },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: "top",
-            },
-          },
-          scales: {
-            y: {
-              title: {
-                display: true,
-                text: "Montant (€)",
-              },
-            },
-            x: {
-              title: {
-                display: true,
-                text: "Années",
-              },
-            },
+        {
+          label: "Total investi (en rouge)",
+          data: totalInvested,
+          borderColor: "red",
+          backgroundColor: "rgba(255, 0, 0, 0.1)",
+          borderWidth: 2,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+      },
+      scales: {
+        y: {
+          title: {
+            display: true,
+            text: "Montant (€)",
           },
         },
-      });
+        x: {
+          title: {
+            display: true,
+            text: "Années",
+          },
+        },
+      },
     },
-    calculateCompoundInterest(principal, rate, years) {
-      let total = 0;
-      for (let i = 1; i <= years; i++) {
-        total += principal * Math.pow(1 + rate, years - i);
-      }
-      return total;
-    },
-  },
-};
+  });
+}
+
+onMounted(() => {
+  renderChart();
+});
 </script>
 
 <style scoped>

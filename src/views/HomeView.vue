@@ -1,9 +1,13 @@
 <script setup lang="ts">
-  import {ref} from "vue";
+import {computed, ref} from "vue";
+import BenefTotal from "@/components/Graphs/BenefTotal.vue";
 
-  const annualInvestment = ref<number>(0);
-  const investmentDuration = ref<number>(0);
-  const interestRate = ref<number>(0);
+const annualInvestment = ref<number>(1200);
+const investmentDuration = ref<number>(32);
+const interestRate = ref<number>(2);
+
+const componentKey = computed(() => `${annualInvestment.value}-${investmentDuration.value}-${interestRate.value}`);
+
 
 </script>
 
@@ -29,19 +33,50 @@
       <div class="col-md-2">
         <label class="form-label" for="pourcentageInput">Taux</label>
         <div class="input-group">
-          <input id="pourcentageInput" v-model="interestRate" class="form-control"  step="0,1"
+          <input id="pourcentageInput" v-model="interestRate" class="form-control" step="0,1"
                  type="number">
           <span class="input-group-text">%</span>
         </div>
       </div>
     </header>
+    <article id="graph-wrapper">
+      <div id="graphEpargne">
+        <BenefTotal
+            v-if="interestRate!=0 && investmentDuration != 0 && annualInvestment!= 0"
+            :key="componentKey"
+            :annualInvestment="annualInvestment"
+            :investmentDuration="investmentDuration"
+            :rate="interestRate"/>
+      </div>
+      <div id="graphEpargne">
+        <BenefTotal
+            v-if="interestRate!=0 && investmentDuration != 0 && annualInvestment!= 0"
+            :key="componentKey"
+            :annualInvestment="annualInvestment"
+            :investmentDuration="investmentDuration"
+            :rate="interestRate"/>
+      </div>
+    </article>
   </main>
 </template>
 
 <style scoped>
- #header-input{
+#header-input {
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+}
+
+#graph-wrapper {
+  width: 100%;
+  display: flex;
    align-items: center;
-   justify-content: center;
-   height: 120px;
- }
+  justify-content: center;
+  height: calc(100vh - 210px);
+  gap: 30px;
+  background-color: #D4D3DC;
+  #graphEpargne{
+    width: 40%;
+  }
+}
 </style>
