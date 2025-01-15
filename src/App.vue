@@ -4,7 +4,8 @@ import { RouterView } from 'vue-router'
 
 <template>
   <nav>
-    <router-link to="/">Estimation</router-link>
+    <router-link to="/">Home</router-link>
+    <router-link to="/estimation">Estimation</router-link>
     <router-link to="/goal">Objectifs</router-link>
   </nav>
   <RouterView />
