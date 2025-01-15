@@ -71,7 +71,7 @@ const componentKey = computed(() => `${annualInvestment.value}-${investmentDurat
 #graph-wrapper {
   width: 100%;
   display: flex;
-   align-items: center;
+  align-items: start;
   justify-content: center;
   height: calc(100vh - 210px);
   gap: 30px;

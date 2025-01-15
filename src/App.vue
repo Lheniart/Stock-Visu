@@ -5,7 +5,7 @@ import { RouterView } from 'vue-router'
 <template>
   <nav>
     <router-link to="/">Estimation</router-link>
-    <router-link to="/history">Historique</router-link>
+    <router-link to="/goal">Objectifs</router-link>
   </nav>
   <RouterView />
 </template>
