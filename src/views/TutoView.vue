@@ -39,7 +39,7 @@
           <div class="accordion-body">
             <strong>1. Effet de la capitalisation : </strong> <br>
             En réinvestissant les gains (dividendes ou intérêts), votre capital croît de manière exponentielle sur le long terme. <br>
-            Exemple : Investir 100 € à 7 % de rendement annuel moyen pendant 30 ans donne près de 760 € grâce aux intérêts cumulés. <br>
+            Exemple : Investir 100 € tous les mois avec 6 % de rendement annuel moyen pendant 20 ans donne près de 23 000 € grâce aux intérêts cumulés. <br>
             <br>
             <strong>2. Moindre impact de la volatilité : </strong> <br>
             Les variations des marchés sont lissées sur le long terme. Même après des crises économiques,
@@ -111,7 +111,7 @@
             <br>
             <strong>2. Frais  : </strong> <br>
             Les frais d’entrée ou de gestion peuvent réduire les rendements. <br>
-            Solution : Optez pour des courtiers à faible coût (ex. DEGIRO, Boursorama). <br>
+            Solution : Optez pour des courtiers à faible coût. <br>
             <br>
             <strong>3. Temps  : </strong> <br>
             La bourse demande un horizon de placement d’au moins 10 ans. <br>
